@@ -27,7 +27,7 @@ export const useTshirtCanvas = ({ svgPath, view, onDesignUpdate }) => {
   const notifyDesignChange = useCallback(() => {
     if (fabricCanvasRef.current && onDesignUpdate) {
       const textureDataUrl = canvasSyncManager.getCanvasTexture(
-        fabricCanvasRef.current
+        fabricCanvasRef.current,
       );
       onDesignUpdate(textureDataUrl);
     }
@@ -143,8 +143,8 @@ const addFabricObject = (canvas, objectData) => {
             angle: objectData.angle || 0,
             scaleX: objectData.scaleX || 1,
             scaleY: objectData.scaleY || 1,
-          }
-        )
+          },
+        ),
       );
       break;
     case "Textbox":

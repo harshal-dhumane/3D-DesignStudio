@@ -1,4 +1,10 @@
-import { ArrowRight, ShieldCheck, Sparkles, UploadCloud } from "lucide-react";
+import {
+  ArrowRight,
+  LogIn,
+  ShieldCheck,
+  Sparkles,
+  UploadCloud,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ThemeToggle from "./ThemeToggle";
@@ -21,7 +27,7 @@ const microFeatures = [
   },
 ];
 
-export default function LandingPage({ onStart }) {
+export default function LandingPage({ onStart, onLogin, onSignup }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fdf4e5] via-[#eef4ff] to-white text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
       <div className="max-w-6xl mx-auto px-6 py-10 lg:py-16">
@@ -38,14 +44,19 @@ export default function LandingPage({ onStart }) {
             </div>
           </div>
           <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
-            <div className="flex items-center gap-1">
-              <span className="text-amber-500">★</span>
-              <span className="font-semibold">4.9</span>
-              <span className="text-slate-500 dark:text-slate-400">/ 5</span>
-            </div>
-            <span className="text-slate-400 dark:text-slate-500">·</span>
-            <span>Trusted by 1,200+ teams</span>
             <ThemeToggle />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onLogin}
+              className="gap-1 px-3"
+            >
+              <LogIn size={16} />
+              Login
+            </Button>
+            <Button size="sm" onClick={onSignup} className="px-4">
+              Sign up
+            </Button>
           </div>
         </header>
 

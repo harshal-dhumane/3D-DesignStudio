@@ -12,8 +12,9 @@ import { useCanvasTextureSync } from "./hooks/useCanvasTextureSync";
 import { Suspense, useState } from "react";
 import { ToolsSidebar } from "./components/ToolsSidebar";
 import LandingPage from "./components/LandingPage";
+import AuthPage from "./components/AuthPage";
 
-function DesignerApp() {
+function DesignerApp({ onBack }) {
   const tshirtColor = useSelector((state) => state.tshirt.tshirtColor);
   const selectedType = useSelector((state) => state.tshirt.selectedType);
   const selectedView = useSelector((state) => state.tshirt.selectedView);
@@ -51,7 +52,7 @@ function DesignerApp() {
       />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 lg:py-12 relative z-10">
-        <Header />
+        <Header onBack={onBack} />
 
         <div className="mt-6 sm:mt-8 grid lg:grid-cols-[minmax(200px,240px)_1fr] gap-4 sm:gap-6 items-start">
           <ToolsSidebar manualSync={manualSync} />
@@ -127,13 +128,39 @@ function DesignerApp() {
 }
 
 function App() {
-  const [showDesigner, setShowDesigner] = useState(false);
+  const [view, setView] = useState("landing");
 
-  if (!showDesigner) {
-    return <LandingPage onStart={() => setShowDesigner(true)} />;
+  if (view === "landing") {
+    return (
+      <LandingPage
+        onStart={() => setView("designer")}
+        onLogin={() => setView("login")}
+        onSignup={() => setView("signup")}
+      />
+    );
   }
 
-  return <DesignerApp />;
+  if (view === "login") {
+    return (
+      <AuthPage
+        initialMode="login"
+        onBack={() => setView("landing")}
+        onContinue={() => setView("designer")}
+      />
+    );
+  }
+
+  if (view === "signup") {
+    return (
+      <AuthPage
+        initialMode="signup"
+        onBack={() => setView("landing")}
+        onContinue={() => setView("designer")}
+      />
+    );
+  }
+
+  return <DesignerApp onBack={() => setView("landing")} />;
 }
 
 export default App;

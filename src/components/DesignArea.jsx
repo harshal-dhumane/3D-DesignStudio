@@ -31,66 +31,40 @@ const DesignArea = () => {
     }
   };
 
-  const isCap = selectedType === "cap";
-
   return (
-    <div className="flex flex-col gap-4">
-      <Card className="border-0 shadow-none bg-transparent">
-        <CardContent className="p-0">
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-              Design surface
-            </div>
-            <div className="flex gap-2 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1">● Guides</span>
-              <span className="flex items-center gap-1">● Layers</span>
-              <span className="flex items-center gap-1">● Sync</span>
-            </div>
-            <div className="flex gap-2 ml-auto">
-              <Button
-                size="sm"
-                variant={selectedView === "front" ? "default" : "outline"}
-                onClick={() => handleViewChange("front")}
-                className="rounded-full px-4"
-              >
-                Front
-              </Button>
-              {!isCap && (
-                <Button
-                  size="sm"
-                  variant={selectedView === "back" ? "default" : "outline"}
-                  onClick={() => handleViewChange("back")}
-                  className="rounded-full px-4"
-                >
-                  Back
-                </Button>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="flex flex-col items-center">
+      {/* Toggle Buttons */}
+      <div className="flex gap-4 mb-5">
+        <Button
+          onClick={() => handleViewChange("front")}
+          variant={selectedView === "front" ? "default" : "outline"}
+        >
+          Front View
+        </Button>
+        <Button
+          onClick={() => handleViewChange("back")}
+          variant={selectedView === "back" ? "default" : "outline"}
+        >
+          Back View
+        </Button>
+      </div>
 
-      <div className="rounded-2xl border bg-card/80 shadow-xl backdrop-blur-sm p-3 sm:p-4">
-        <div className="rounded-xl border bg-muted/40 p-3 sm:p-4 grid gap-4">
-          {(selectedView === "front" || isCap) && (
-            <Card className="border-0 bg-transparent shadow-none">
-              <CardContent className="p-0">
-                <div className="canvas-frame">
-                  <TshirtCanvasFront svgPath={getSvgPath("front")} />
-                </div>
-              </CardContent>
-            </Card>
-          )}
-          {!isCap && selectedView === "back" && (
-            <Card className="border-0 bg-transparent shadow-none">
-              <CardContent className="p-0">
-                <div className="canvas-frame">
-                  <TshirtCanvasBack svgPath={getSvgPath("back")} />
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+      {/* Conditional Rendering: Only show the selected canvas */}
+      <div className="flex justify-center">
+        {selectedView === "front" && (
+          <Card>
+            <CardContent>
+              <TshirtCanvasFront svgPath={getSvgPath("front")} />
+            </CardContent>
+          </Card>
+        )}
+        {selectedView === "back" && (
+          <Card>
+            <CardContent>
+              <TshirtCanvasBack svgPath={getSvgPath("back")} />
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );

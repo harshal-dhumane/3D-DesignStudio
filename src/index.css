@@ -89,12 +89,12 @@
 
   .canvas-frame {
     width: 100%;
-    max-width: clamp(260px, 70vw, 420px);
+    max-width: min(92vw, 560px);
     margin: 0 auto;
     aspect-ratio: 1 / 1;
     position: relative;
     overflow: hidden;
-    padding: 8px 10px;
+    padding: clamp(8px, 2vw, 16px);
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -107,5 +107,6 @@
     height: 100%;
     max-width: 100%;
     max-height: 100%;
+    object-fit: contain;
   }
 }

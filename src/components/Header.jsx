@@ -1,6 +1,7 @@
 import ThemeToggle from "./ThemeToggle";
+import { Button } from "@/components/ui/button";
 
-const Header = () => {
+const Header = ({ onBack }) => {
   return (
     <div className="flex items-center justify-between gap-4 px-4 py-2 rounded-2xl bg-card/80 border shadow-sm">
       <div className="flex items-center gap-3">
@@ -17,7 +18,14 @@ const Header = () => {
           <span className="text-muted-foreground"></span>
         </div>
       </div>
-      <ThemeToggle />
+      <div className="flex items-center gap-2">
+        {onBack && (
+          <Button variant="outline" size="sm" onClick={onBack}>
+            Back
+          </Button>
+        )}
+        <ThemeToggle />
+      </div>
     </div>
   );
 };
