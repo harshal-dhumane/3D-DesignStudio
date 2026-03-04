@@ -9,10 +9,12 @@ import { useCanvas } from "./hooks/useCanvas";
 import { TshirtModel } from "./components/TShirtModel";
 import { CapModel } from "./components/CapModel";
 import { useCanvasTextureSync } from "./hooks/useCanvasTextureSync";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { ToolsSidebar } from "./components/ToolsSidebar";
 import LandingPage from "./components/LandingPage";
 import AuthPage from "./components/AuthPage";
+import { auth } from "@/lib/firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function DesignerApp({ onBack }) {
   const tshirtColor = useSelector((state) => state.tshirt.tshirtColor);
@@ -129,6 +131,43 @@ function DesignerApp({ onBack }) {
 
 function App() {
   const [view, setView] = useState("landing");
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Listen to Firebase authentication state
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        // User is logged in, set view to designer
+        setView("designer");
+      } else {
+        // User is logged out, set view to landing
+        setView("landing");
+      }
+      setLoading(false);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      setView("landing");
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#fdf4e5] via-[#eef4ff] to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+        <div className="text-center">
+          <p className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+            Loading...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (view === "landing") {
     return (
@@ -160,7 +199,7 @@ function App() {
     );
   }
 
-  return <DesignerApp onBack={() => setView("landing")} />;
+  return <DesignerApp onBack={handleLogout} />;
 }
 
 export default App;
