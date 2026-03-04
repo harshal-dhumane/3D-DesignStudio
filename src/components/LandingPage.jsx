@@ -74,7 +74,7 @@ export default function LandingPage({ onStart, onLogin, onSignup }) {
               export crisp, print-ready files for your team or clients.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Button size="lg" className="gap-2" onClick={onStart}>
+              <Button size="lg" className="gap-2" onClick={onLogin}>
                 Design clothing
                 <ArrowRight size={18} />
               </Button>
