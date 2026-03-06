@@ -7,6 +7,7 @@ import TshirtCanvasBack from "./TshirtCanvasBack";
 import { setSelectedView } from "../features/tshirtSlice";
 import { useCanvas } from "@/hooks/useCanvas";
 
+
 const DesignArea = () => {
   // Get values from Redux store
   const dispatch = useDispatch();
