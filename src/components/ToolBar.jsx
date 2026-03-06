@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import * as fabric from "fabric";
 import { Button } from "@/components/ui/button";
-import { Box, ImagePlus, Palette, Slash, Trash, Type } from "lucide-react";
+import { ImagePlus, Palette, Slash, Trash, Type, Wand2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -165,89 +165,136 @@ const ToolBar = ({ manualSync }) => {
   };
 
   return (
-    <div className="flex flex-col gap-3 w-full min-w-[180px] md:min-w-[200px]">
-      <Select value={selectedType} onValueChange={handleTypeChange}>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Select T-Shirt" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {Object.entries(TSHIRT_TYPES).map(([value, { name }]) => (
-              <SelectItem key={value} value={value}>
-                {name}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-
-      <input
-        type="file"
-        accept="image/*"
-        ref={fileInputRef}
-        onChange={handleAddImage}
-        className="hidden"
-      />
-      <Button onClick={triggerFileInput} className="w-full justify-start gap-2">
-        <ImagePlus />
-
-        <span>Design</span>
-      </Button>
-
-      <Button onClick={handleAddText} className="w-full justify-start gap-2">
-        <Type />
-        <span>Text</span>
-      </Button>
-
-      <Button onClick={handleAddLine} className="w-full justify-start gap-2">
-        <Slash />
-        <span>Line</span>
-      </Button>
-
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button className="w-full justify-start gap-2">
-            <Palette />
-            <span>Color</span>
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="ml-5 w-80">
-          <div className="grid gap-4">
-            <div className="space-y-2">
-              <h4 className="font-medium leading-none">Select Color</h4>
-              <p className="text-sm text-muted-foreground">
-                Select the base color of your t-shirt
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {TSHIRT_COLOR_CODES.map((color) => (
-                <Button
-                  key={color}
-                  className="w-8 h-8 rounded-full p-0 border-2 border-gray-200 shadow hover:shadow-lg"
-                  style={{ backgroundColor: color }}
-                  onClick={() => handleColorChange(color)}
-                />
-              ))}
-            </div>
+    <div className="flex flex-col gap-4 w-full min-w-[190px] md:min-w-[210px]">
+      <div className="rounded-xl border bg-white/70 shadow-sm p-3 space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-semibold">
+              Setup
+            </p>
+            <h4 className="font-semibold leading-tight">Base garment</h4>
           </div>
-        </PopoverContent>
-      </Popover>
-      <Button
-        onClick={handleDelete}
-        variant="destructive"
-        className="w-full justify-start gap-2"
-      >
-        <Trash />
-        <span>Remove</span>
-      </Button>
-      <Button
-        onClick={handleClearAll}
-        variant="destructive"
-        className="w-full justify-start gap-2"
-      >
-        <Trash />
-        <span>Clear All</span>
-      </Button>
+          <Wand2 className="h-5 w-5 text-amber-500" />
+        </div>
+
+        <Select value={selectedType} onValueChange={handleTypeChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select T-Shirt" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {Object.entries(TSHIRT_TYPES).map(([value, { name }]) => (
+                <SelectItem key={value} value={value}>
+                  {name}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button className="w-full justify-start gap-2" variant="secondary">
+              <Palette />
+              <span>Base color</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="ml-2 w-80">
+            <div className="grid gap-4">
+              <div className="space-y-1">
+                <h4 className="font-semibold leading-tight">Palette</h4>
+                <p className="text-sm text-muted-foreground">
+                  Pick a print-ready cotton swatch.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {TSHIRT_COLOR_CODES.map((color) => (
+                  <Button
+                    key={color}
+                    className="w-9 h-9 rounded-full p-0 border-2 border-white shadow-md hover:scale-105 transition"
+                    style={{ backgroundColor: color }}
+                    onClick={() => handleColorChange(color)}
+                  />
+                ))}
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
+
+      <div className="rounded-xl border bg-white/70 shadow-sm p-3 space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-semibold">
+              Add
+            </p>
+            <h4 className="font-semibold leading-tight">Artwork & text</h4>
+          </div>
+        </div>
+
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handleAddImage}
+          className="hidden"
+        />
+        <Button
+          onClick={triggerFileInput}
+          className="w-full justify-start gap-2"
+          variant="default"
+        >
+          <ImagePlus />
+          <span>Upload artwork</span>
+        </Button>
+
+        <Button
+          onClick={handleAddText}
+          className="w-full justify-start gap-2"
+          variant="secondary"
+        >
+          <Type />
+          <span>Add text block</span>
+        </Button>
+
+        <Button
+          onClick={handleAddLine}
+          className="w-full justify-start gap-2"
+          variant="outline"
+        >
+          <Slash />
+          <span>Guideline</span>
+        </Button>
+      </div>
+
+      <div className="rounded-xl border bg-white/70 shadow-sm p-3 space-y-2">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-semibold">
+              Cleanup
+            </p>
+            <h4 className="font-semibold leading-tight">Housekeeping</h4>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <Button
+            onClick={handleDelete}
+            variant="destructive"
+            className="justify-start gap-2"
+          >
+            <Trash />
+            <span>Remove</span>
+          </Button>
+          <Button
+            onClick={handleClearAll}
+            variant="outline"
+            className="justify-start gap-2"
+          >
+            <Trash />
+            <span>Clear all</span>
+          </Button>
+        </div>
+      </div>
       {/* <SaveDesign /> */}
     </div>
   );

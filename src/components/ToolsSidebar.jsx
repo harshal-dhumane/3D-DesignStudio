@@ -26,27 +26,59 @@ export function ToolsSidebar({ manualSync }) {
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="w-[82vw] max-w-sm sm:w-[340px] p-4 sm:p-6"
+        className="w-[82vw] max-w-sm sm:w-[360px] p-4 sm:p-6"
       >
         <SheetHeader>
-          <SheetTitle>Design Tools</SheetTitle>
+          <SheetTitle className="text-left">Design Console</SheetTitle>
         </SheetHeader>
         <ScrollArea className="h-[calc(100vh-140px)] mt-4">
           <div className="pr-2 sm:pr-6">
-            <ToolBar manualSync={manualSync} />
-            <TextToolBar manualSync={manualSync} />
-            <LineToolBar manualSync={manualSync} />
+            <div className="rounded-2xl border bg-gradient-to-br from-white via-slate-50 to-white shadow-lg p-4 space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-semibold">
+                    Workflow
+                  </p>
+                  <h3 className="text-base font-semibold leading-tight">
+                    Build your print-ready layout
+                  </h3>
+                </div>
+                <span className="text-xs rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 px-3 py-1 font-semibold">
+                  Pro Mode
+                </span>
+              </div>
+
+              <ToolBar manualSync={manualSync} />
+              <TextToolBar manualSync={manualSync} />
+              <LineToolBar manualSync={manualSync} />
+            </div>
           </div>
         </ScrollArea>
       </SheetContent>
 
       {/* Desktop version - always visible */}
       <div className="hidden lg:block">
-        <div className="w-full min-w-[200px] max-w-[240px] rounded-2xl border bg-card/80 shadow-lg">
-          <div className="p-4">
-            <h2 className="font-semibold mb-4">Design Tools</h2>
-            <ScrollArea className="max-h-[70vh]">
-              <div className="pr-2">
+        <div className="w-full min-w-[220px] max-w-[260px] rounded-3xl border bg-gradient-to-b from-white via-slate-50 to-white shadow-xl">
+          <div className="p-5 space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-semibold">
+                  Tools
+                </p>
+                <h2 className="font-semibold text-lg leading-tight">
+                  Design Console
+                </h2>
+                <p className="text-xs text-muted-foreground">
+                  Add art, text, colors, and refine details.
+                </p>
+              </div>
+              <span
+                className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(52,211,153,0.25)]"
+                aria-hidden
+              />
+            </div>
+            <ScrollArea className="max-h-[72vh] pr-2">
+              <div className="space-y-4">
                 <ToolBar manualSync={manualSync} />
                 <TextToolBar manualSync={manualSync} />
                 <LineToolBar manualSync={manualSync} />
